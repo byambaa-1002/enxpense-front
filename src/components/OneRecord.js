@@ -6,6 +6,9 @@ const OneRecord = (props) => {
       <div className="flex gap-4">
         <div
           className={`flex justify-center items-center w-10 h-10 rounded-full bg-[${iconColor}]`}
+          style={{
+            backgroundColor: iconColor,
+          }}
         >
           {image}
         </div>

@@ -50,12 +50,14 @@ const AddRecord = (props) => {
             <div
               onClick={() => handleIncomeOrExpense("Expense")}
               className={`py-2 px-[55.5px] ${textColorExpense} font-normal text-base rounded-3xl bg-[${Expensebackground}]`}
+              style={{ backgroundColor: Expensebackground }}
             >
               Expense
             </div>
             <div
               onClick={() => handleIncomeOrExpense("Income")}
               className={`py-2 px-[55.5px] ${textColorIncome} font-normal text-base rounded-3xl bg-[${Incomebackground}]`}
+              style={{ backgroundColor: Incomebackground }}
             >
               Income
             </div>
@@ -99,6 +101,7 @@ const AddRecord = (props) => {
           <button
             onClick={() => handleAdd()}
             className={`bg-[${buttonColor}] flex items-center justify-center py-2 rounded-3xl text-white`}
+            style={{ backgroundColor: buttonColor }}
           >
             Add Record
           </button>

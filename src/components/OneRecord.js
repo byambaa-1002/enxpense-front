@@ -18,7 +18,12 @@ const OneRecord = (props) => {
           <p className="font-normal text-xs text-[#6B7280]"> {time} </p>
         </div>
       </div>
-      <p className={`font-semibold text-base text-[${color}]`}> {money} </p>
+      <p
+        className={`font-semibold text-base text-[${color}]`}
+        style={{ text: color }}
+      >
+        {money}
+      </p>
     </div>
   );
 };

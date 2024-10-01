@@ -7,7 +7,6 @@ import { FaChevronLeft, FaSearchengin } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
 import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
-
 import AddRecord from "@/components/AddRecord";
 
 const categories = [
@@ -142,8 +141,6 @@ const Home = () => {
   const [selectedEyes, setSelectedEyes] = useState(checked);
 
   const [checkedCategories, setCheckedCategories] = useState(categories);
-  console.log(selectedEyes);
-  console.log(checkedCategories);
   const handleCategory = (input, index) => {
     let myCategories = [...selectedEyes];
     if (input == "true") {

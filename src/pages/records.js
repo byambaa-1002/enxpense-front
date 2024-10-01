@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MyCategories from "@/components/Category";
 import PlusSign from "../../public/icons/PlusSign";
 import OneRecord from "../components/OneRecord";
@@ -9,6 +9,7 @@ import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 
 import AddRecord from "@/components/AddRecord";
+import axios from "axios";
 
 const categories = [
   "Food & Drinks",
@@ -142,8 +143,7 @@ const Records = () => {
   const [selectedEyes, setSelectedEyes] = useState(checked);
 
   const [checkedCategories, setCheckedCategories] = useState(categories);
-  console.log(selectedEyes);
-  console.log(checkedCategories);
+
   const handleCategory = (input, index) => {
     let myCategories = [...selectedEyes];
     if (input == "true") {
@@ -183,6 +183,9 @@ const Records = () => {
   const handleAdd = () => {
     setShowAdd(!showAdd);
   };
+  const addRecord = () => {
+    axios.get("http://localhost:8000/transaction", {});
+  };
   // const opacity = showAdd === false ? "opacity-100" : "opacity-100";
   return (
     // <div className="flex justify-center items-center flex-col">
@@ -193,7 +196,7 @@ const Records = () => {
         </div>
       )}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
-        <Navbar />
+        <Navbar onClick={addRecord} />
 
         <div className="flex gap-6">
           <div className="bg-white flex flex-col px-6 py-4 w-[282px] gap-6 rounded-xl h-fit border border-[#E5E7EB]">

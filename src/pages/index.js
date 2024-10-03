@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyCategories from "@/components/Category";
 import PlusSign from "../../public/icons/PlusSign";
 import OneRecord from "../components/OneRecord";
@@ -8,6 +8,7 @@ import { FaAngleRight } from "react-icons/fa6";
 import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import AddRecord from "@/components/AddRecord";
+import axios from "axios";
 
 const categories = [
   "Food & Drinks",
@@ -135,12 +136,13 @@ const Home = () => {
   const [showAdd, setShowAdd] = useState(false);
 
   const [selected, setSelected] = useState("All");
-  const [myRecords, setRecords] = useState(records);
+  const [myRecords, setRecords] = useState([]);
 
   const [selectedCategories, setSelectedCategories] = useState(categories);
   const [selectedEyes, setSelectedEyes] = useState(checked);
 
   const [checkedCategories, setCheckedCategories] = useState(categories);
+
   const handleCategory = (input, index) => {
     let myCategories = [...selectedEyes];
     if (input == "true") {
@@ -157,22 +159,26 @@ const Home = () => {
     }
     setCheckedCategories();
   };
+
   const handleExpense = () => {
     const filtered = records.map((day) =>
       day.filter((oneRecord) => oneRecord.money.includes("-"))
     );
     setRecords(filtered);
   };
+
   const handleIncome = () => {
     const filtered = records.map((day) =>
       day.filter((oneRecord) => oneRecord.money.includes("+"))
     );
-    console.log(filtered);
+
     setRecords(filtered);
   };
+
   const handleAll = () => {
     setRecords(records);
   };
+
   const handleChange = (option) => {
     setSelected(option);
   };
@@ -180,15 +186,27 @@ const Home = () => {
   const handleAdd = () => {
     setShowAdd(!showAdd);
   };
-  // const opacity = showAdd === false ? "opacity-100" : "opacity-100";
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/transaction")
+      .then(function (response) {
+        setRecords(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(function () {});
+  }, []);
+
   return (
-    // <div className="flex justify-center items-center flex-col">
     <div>
       {showAdd && (
         <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
           <AddRecord onCloseModal={handleAdd} />
         </div>
       )}
+      {/* <AddRecord /> */}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
         <Navbar />
 
@@ -284,23 +302,27 @@ const Home = () => {
             <div className="flex flex-col gap-3">
               <p className="font-semibold text-base"> Today </p>
               <div className="flex flex-col gap-3 mb-3">
-                {myRecords[0].map((recordToday, index) => {
+                {myRecords.transactions?.map((recordToday, index) => {
                   return (
                     <OneRecord
                       key={index}
-                      text={recordToday.text}
+                      text={recordToday.name}
                       image={recordToday.image}
                       time={recordToday.time}
                       color={recordToday.color}
-                      money={recordToday.money}
-                      iconColor={recordToday.iconColor}
+                      money={recordToday.amount}
+                      iconColor={
+                        recordToday.transactionType === "EXP"
+                          ? "#0166FF"
+                          : "#FF4545"
+                      }
                     />
                   );
                 })}
               </div>
               <p className="font-semibold text-base"> Yesterday </p>
               <div className="flex flex-col gap-3">
-                {myRecords[1].map((recordToday, index) => {
+                {records[0].map((recordToday, index) => {
                   return (
                     <OneRecord
                       key={index}

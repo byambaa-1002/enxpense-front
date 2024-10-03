@@ -2,6 +2,7 @@ import Link from "next/link";
 import Logo from "../../public/icons/Logo";
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "sonner";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -9,7 +10,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
 
-  const signUpClick = () => {
+  const signUpClick = async () => {
     const information = {
       name: name,
       email: email,
@@ -17,14 +18,15 @@ const SignUp = () => {
     };
     if (password !== rePassword) {
       console.log("Davtsan password buruu baina");
+      toast.error("Davtsan password buruu baina");
     } else {
+      await axios.post("http://localhost:8000/user", {
+        email: email,
+        name: name,
+        password: password,
+        avatar_img: "https://i.pravatar.cc/300",
+      });
     }
-    axios.post("http://localhost:8000/user", {
-      email: email,
-      name: name,
-      password: password,
-      avatar_img: "https://i.pravatar.cc/300",
-    });
   };
 
   const handleName = (event) => {

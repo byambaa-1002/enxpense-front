@@ -5,11 +5,13 @@ import axios from "axios";
 const AddRecord = (props) => {
   const { onCloseModal } = props;
   const [incomeExpense, setIncomeExpense] = useState("Expense");
-  const [categories, setCategories] = useState([]);
-  const [amount, setAmount] = useState(0);
-  const [category, setCategory] = useState("");
+  const [categories, setCategory] = useState([]);
+  const [categoryname, setcategoryname] = useState(0);
+  const [category_image, setcategory_image] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [amount, setAmount] = useState("");
+
   const [description, setDescription] = useState("");
   const [transactionType, setTransactionType] = useState("EXP");
   const [name, setName] = useState("");
@@ -37,15 +39,16 @@ const AddRecord = (props) => {
   }, []);
 
   const handleAdd = async () => {
-    const user_id = localStorage.getItem("lastname");
+    const categoryid = localStorage.getItem("lastname");
     await axios
-      .post("http://localhost:8000/transaction", {
-        user_id: user_id,
-        name: name,
-        amount: amount,
-        transaction_type: transactionType,
+      .post("http://localhost:8000/category", {
+        categoryid: categoryid,
+        categoryname: categoryname,
         description: description,
-        category_id: category,
+        category_image: category_image,
+        date: date,
+        amount: amount,
+        time: time,
       })
       .then(function (response) {
         console.log(response);
@@ -130,6 +133,7 @@ const AddRecord = (props) => {
                     Food
                   </option>
                   <option value="Home"> Home </option>
+                  <option value="delguur">delguur</option>
                   {categories?.categories?.map((category) => (
                     <option key={category.id} value={category.id}>
                       {category.name}

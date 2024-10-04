@@ -20,7 +20,7 @@ const SignUp = () => {
       console.log("Davtsan password buruu baina");
       toast.error("Davtsan password buruu baina");
     } else {
-      await axios.post("http://localhost:8000/user", {
+      await axios.post("http://localhost:8000/User", {
         email: email,
         name: name,
         password: password,

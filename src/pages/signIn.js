@@ -12,14 +12,15 @@ const SignIn = () => {
 
   const handleLogin = async () => {
     await axios
-      .post("http://localhost:8000/user/signin", {
+      .post("http://localhost:8000/users/signin", {
         email: email,
         password: password,
       })
       .then(function (response) {
-        if (response.data.user.length === 1) {
-          console.log(response.data.user[0].id);
-          localStorage.setItem("user_id", response.data.user[0].id);
+        if (response.data.users.length === 1) {
+          // console.log(response.data.user[0].id);
+          localStorage.setItem("userid", response.data.users[0].userid);
+
           router.push("/");
         } else {
           toast.error("unsuccessful");

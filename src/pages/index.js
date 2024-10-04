@@ -1,13 +1,13 @@
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
-import MyCategories from "@/components/Category";
+import MyCategories from "../components/Category";
 import PlusSign from "../../public/icons/PlusSign";
 import OneRecord from "../components/OneRecord";
 import { FaChevronLeft, FaSearchengin } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
 import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
-import AddRecord from "@/components/AddRecord";
+import AddRecord from "../components/AddRecord";
 import axios from "axios";
 
 const categories = [
@@ -133,6 +133,32 @@ let checked = [
   "true",
 ];
 const Home = () => {
+  const [categories, setCategories] = useState([]);
+  console.log(categories);
+
+  // axios
+  //   .get("http://localhost:8000/category")
+  //   .then(function (response) {
+  //     console.log(response);
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+
+  useEffect(() => {
+    async function getUser() {
+      try {
+        const response = await axios.get("http://localhost:8000/category");
+        console.log(response.data.categories);
+
+        // setCategories(response.data.categories);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getUser();
+  }, []);
+
   const [showAdd, setShowAdd] = useState(false);
 
   const [selected, setSelected] = useState("All");
@@ -189,7 +215,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/transaction")
+      .get("http://localhost:8000/users")
       .then(function (response) {
         setRecords(response.data);
       })
@@ -206,7 +232,6 @@ const Home = () => {
           <AddRecord onCloseModal={handleAdd} />
         </div>
       )}
-      {/* <AddRecord /> */}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
         <Navbar />
 

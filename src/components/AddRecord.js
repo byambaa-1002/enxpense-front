@@ -5,7 +5,7 @@ import axios from "axios";
 const AddRecord = (props) => {
   const { onCloseModal } = props;
   const [incomeExpense, setIncomeExpense] = useState("Expense");
-  const [categories, setCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [categoryname, setcategoryname] = useState(0);
   const [category_image, setcategory_image] = useState("");
   const [date, setDate] = useState("");
@@ -26,39 +26,57 @@ const AddRecord = (props) => {
     }
   };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/category")
-      .then(function (response) {
-        setCategories(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .finally(function () {});
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8000/category")
+  //     .then(function (response) {
+  //       setCategories(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     })
+  //     .finally(function () {});
+  // }, []);
 
-  const handleAdd = async () => {
-    const categoryid = localStorage.getItem("lastname");
+  // const handleAdd = async () => {
+  //   const categoryid = localStorage.getItem("lastname");
+  //   await axios
+  //     .post("http://localhost:8000/category", {
+  //       categoryid: categoryid,
+  //       categoryname: categories,
+  //       description: categories,
+  //       category_image: category_image,
+  //       name: name,
+  //       // date: date,
+  //       amount: amount,
+  //       // time: time,
+  //     })
+  //     .then(function (response) {
+  //       console.log(response);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     })
+  //     .finally(function () {});
+  // };
+  // console.log(name);
+  const handleadd = async () => {
     await axios
-      .post("http://localhost:8000/category", {
-        categoryid: categoryid,
-        categoryname: categoryname,
-        description: description,
-        category_image: category_image,
-        date: date,
+      .post("http://localhost:8000/transaction", {
+        userid: 1,
+        name: name,
         amount: amount,
-        time: time,
+        description: description,
+        username: categoryname,
+        categoryid: 1,
       })
       .then(function (response) {
         console.log(response);
       })
       .catch(function (error) {
         console.log(error);
-      })
-      .finally(function () {});
+      });
   };
-
   const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#F3F4F6";
   const Incomebackground = incomeExpense === "Income" ? "#16A34A" : "#F3F4F6";
   const buttonColor = incomeExpense === "Income" ? "#16A34A" : "#0166FF";
@@ -82,109 +100,109 @@ const AddRecord = (props) => {
         <IoClose size={24} onClick={onCloseModal} />
       </div>
       <div className="flex w-full">
-        <form onSubmit={handleAdd}>
-          <div className="px-6 pt-5 pb-6 flex flex-col gap-5">
-            <div className="rounded-[100px] bg-[#F3F4F6] flex gap-1">
-              <div
-                onClick={() => handleIncomeOrExpense("Expense")}
-                className={`py-2 px-[55.5px] ${textColorExpense} font-normal text-base rounded-3xl bg-[${Expensebackground}]`}
-                style={{ backgroundColor: Expensebackground }}
-              >
-                Expense
-              </div>
-              <div
-                onClick={() => handleIncomeOrExpense("Income")}
-                onChange={(e) => setTransactionType(e.target.value)}
-                className={`py-2 px-[55.5px] ${textColorIncome} font-normal text-base rounded-3xl bg-[${Incomebackground}]`}
-                style={{ backgroundColor: Incomebackground }}
-              >
-                Income
-              </div>
-            </div>
-            <div className="flex flex-col mb-3 gap-[22px]">
-              <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
-                <p className="font-normal text-base"> Name </p>
-                <input
-                  type="text"
-                  name="name"
-                  onChange={(e) => setName(e.target.value)}
-                  className="font-normal text-xl bg-[#F3F4F6]"
-                />
-              </div>
-
-              <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
-                <p className="font-normal text-base"> Amount </p>
-                <input
-                  type="number"
-                  name="amount"
-                  onChange={(e) => setAmount(e.target.value)}
-                  placeholder="₮ 000.00"
-                  className="font-normal text-xl bg-[#F3F4F6]"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <p> Category </p>
-                <select
-                  className="bg-[#F9FAFB] py-3 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg"
-                  onChange={(e) => setCategory(e.target.value)}
-                >
-                  <option defaultChecked> Find or choose category</option>
-                  <option value="Food" className="px-[18px] py-2 flex gap-3">
-                    Food
-                  </option>
-                  <option value="Home"> Home </option>
-                  <option value="delguur">delguur</option>
-                  {categories?.categories?.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex gap-2">
-                <div className="flex flex-col gap-2 w-full">
-                  <p>Date</p>
-                  <input
-                    onChange={(e) => setDate(e.target.value)}
-                    type="date"
-                    name="date"
-                    defaultValue={`${year}-${month}-${day}`}
-                    className="py-3 px-4 bg-[#F9FAFB] border border-[#D1D5DB] rounded-lg"
-                  />
-                </div>
-                <div className="flex flex-col gap-2 w-full">
-                  <p>Time</p>
-                  <input
-                    onChange={(e) => setTime(e.target.value)}
-                    name="time"
-                    type="time"
-                    defaultValue={`${hour}:${minutes}`}
-                    className="py-3 px-4 bg-[#F9FAFB] border border-[#D1D5DB] rounded-lg"
-                  />
-                </div>
-              </div>
-            </div>
-            <button
-              // onClick={() => handleAdd()}
-              type="submit"
-              className={`bg-[${buttonColor}] flex items-center justify-center py-2 rounded-3xl text-white`}
-              style={{ backgroundColor: buttonColor }}
+        {/* <form onSubmit={handleAdd}> */}
+        <div className="px-6 pt-5 pb-6 flex flex-col gap-5">
+          <div className="rounded-[100px] bg-[#F3F4F6] flex gap-1">
+            <div
+              onClick={() => handleIncomeOrExpense("Expense")}
+              className={`py-2 px-[55.5px] ${textColorExpense} font-normal text-base rounded-3xl bg-[${Expensebackground}]`}
+              style={{ backgroundColor: Expensebackground }}
             >
-              Add Record
-            </button>
+              Expense
+            </div>
+            <div
+              onClick={() => handleIncomeOrExpense("Income")}
+              // onChange={(e) => setTransactionType(e.target.value)}
+              className={`py-2 px-[55.5px] ${textColorIncome} font-normal text-base rounded-3xl bg-[${Incomebackground}]`}
+              style={{ backgroundColor: Incomebackground }}
+            >
+              Income
+            </div>
           </div>
+          <div className="flex flex-col mb-3 gap-[22px]">
+            <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
+              <p className="font-normal text-base"> Name </p>
+              <input
+                type="text"
+                name="name"
+                onChange={(e) => setName(e.target.value)}
+                className="font-normal text-xl bg-[#F3F4F6]"
+              />
+            </div>
 
-          <div className="flex flex-col gap-2 px-6 pb-6 pt-[18px] w-full ">
-            <p className="text-[#1F2937]">Description</p>
-
-            <textarea
-              onChange={(e) => setDescription(e.target.value)}
-              name="description"
-              placeholder="Write here"
-              className="bg-[#F3F4F6] pt-4 pl-4 border border-[#D1D5DB] w-full h-full rounded-lg"
-            />
+            <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
+              <p className="font-normal text-base"> Amount </p>
+              <input
+                type="number"
+                name="amount"
+                onChange={(e) => setAmount(e.target.value)}
+                placeholder="₮ 000.00"
+                className="font-normal text-xl bg-[#F3F4F6]"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <p> Category </p>
+              <select
+                className="bg-[#F9FAFB] py-3 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg"
+                onChange={(e) => setCategories(e.target.value)}
+              >
+                <option defaultChecked> Find or choose category</option>
+                <option value="Food" className="px-[18px] py-2 flex gap-3">
+                  Food
+                </option>
+                <option value="Home"> Home </option>
+                <option value="delguur">delguur</option>
+                {categories?.categories?.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex gap-2">
+              <div className="flex flex-col gap-2 w-full">
+                <p>Date</p>
+                <input
+                  onChange={(e) => setDate(e.target.value)}
+                  type="date"
+                  name="date"
+                  defaultValue={`${year}-${month}-${day}`}
+                  className="py-3 px-4 bg-[#F9FAFB] border border-[#D1D5DB] rounded-lg"
+                />
+              </div>
+              <div className="flex flex-col gap-2 w-full">
+                <p>Time</p>
+                <input
+                  onChange={(e) => setTime(e.target.value)}
+                  name="time"
+                  type="time"
+                  defaultValue={`${hour}:${minutes}`}
+                  className="py-3 px-4 bg-[#F9FAFB] border border-[#D1D5DB] rounded-lg"
+                />
+              </div>
+            </div>
           </div>
-        </form>
+          <button
+            onClick={() => handleadd()}
+            type="submit"
+            className={`bg-[${buttonColor}] flex items-center justify-center py-2 rounded-3xl text-white`}
+            style={{ backgroundColor: buttonColor }}
+          >
+            Add Record
+          </button>
+        </div>
+
+        <div className="flex flex-col gap-2 px-6 pb-6 pt-[18px] w-full ">
+          <p className="text-[#1F2937]">Description</p>
+
+          <textarea
+            onChange={(e) => setDescription(e.target.value)}
+            name="description"
+            placeholder="Write here"
+            className="bg-[#F3F4F6] pt-4 pl-4 border border-[#D1D5DB] w-full h-full rounded-lg"
+          />
+        </div>
+        {/* </form> */}
       </div>
     </div>
   );

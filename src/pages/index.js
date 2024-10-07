@@ -9,7 +9,7 @@ import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import AddRecord from "../components/AddRecord";
 import axios from "axios";
-
+import AddTransaction from "../components/Transaction";
 const categories = [
   "Food & Drinks",
   "Lending & Renting",
@@ -134,7 +134,8 @@ let checked = [
 ];
 const Home = () => {
   const [categories, setCategories] = useState([]);
-  console.log(categories);
+  const [Transaction, setTransaction] = useState([]);
+  // console.log(categories);
 
   // axios
   //   .get("http://localhost:8000/category")
@@ -145,25 +146,25 @@ const Home = () => {
   //     console.log(error);
   //   });
 
-  useEffect(() => {
-    async function getUser() {
-      try {
-        const response = await axios.get("http://localhost:8000/category");
-        console.log(response.data.categories);
+  // useEffect(() => {
+  //   async function getUser() {
+  //     try {
+  //       const response = await axios.get("http://localhost:8000/category");
+  //       console.log(response.data.categories);
 
-        // setCategories(response.data.categories);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getUser();
-  }, []);
+  //       // setCategories(response.data.categories);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+  //   getUser();
+  // }, []);
 
   const [showAdd, setShowAdd] = useState(false);
 
   const [selected, setSelected] = useState("All");
   const [myRecords, setRecords] = useState([]);
-
+  ``;
   const [selectedCategories, setSelectedCategories] = useState(categories);
   const [selectedEyes, setSelectedEyes] = useState(checked);
 
@@ -213,17 +214,17 @@ const Home = () => {
     setShowAdd(!showAdd);
   };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/users")
-      .then(function (response) {
-        setRecords(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .finally(function () {});
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8000/users")
+  //     .then(function (response) {
+  //       setRecords(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     })
+  //     .finally(function () {});
+  // }, []);
 
   return (
     <div>
@@ -293,10 +294,7 @@ const Home = () => {
               <div className="flex flex-col gap-2">
                 {categories.map((category1, index) => {
                   return (
-                    <div
-                      key={index}
-                      onClick={() => handleCategory(selectedEyes[index], index)}
-                    >
+                    <div key={index}>
                       <MyCategories categoryName={category1} />
                     </div>
                   );
@@ -312,11 +310,15 @@ const Home = () => {
             <div className="flex justify-between">
               <div className="flex gap-4 items-center">
                 <div className="w-8 h-8 rounded-lg p-1.5 bg-[#E5E7EB]">
-                  <FaChevronLeft />
+                  <button>
+                    <FaChevronLeft />
+                  </button>
                 </div>
                 <p className="font-normal text-base"> Last 30 Days</p>
                 <div className="w-8 h-8 rounded-lg p-1.5 bg-[#E5E7EB]">
-                  <FaAngleRight />
+                  <button>
+                    <FaAngleRight />
+                  </button>
                 </div>
               </div>
               <select className="w-[180px] py-3 px-4 rounded-lg font-semibold text-base text-[#1F2937] border border-[#D1D5DB]">
@@ -347,19 +349,7 @@ const Home = () => {
               </div>
               <p className="font-semibold text-base"> Yesterday </p>
               <div className="flex flex-col gap-3">
-                {records[0].map((recordToday, index) => {
-                  return (
-                    <OneRecord
-                      key={index}
-                      text={recordToday.text}
-                      image={recordToday.image}
-                      time={recordToday.time}
-                      color={recordToday.color}
-                      money={recordToday.money}
-                      iconColor={recordToday.iconColor}
-                    />
-                  );
-                })}
+                <AddTransaction />
               </div>
             </div>
           </div>

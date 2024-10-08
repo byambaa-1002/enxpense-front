@@ -11,7 +11,7 @@ const AddRecord = (props) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [amount, setAmount] = useState("");
-
+  const { getUser } = props;
   const [description, setDescription] = useState("");
   const [transactionType, setTransactionType] = useState("EXP");
   const [name, setName] = useState("");
@@ -26,40 +26,6 @@ const AddRecord = (props) => {
     }
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8000/category")
-  //     .then(function (response) {
-  //       setCategories(response.data);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     })
-  //     .finally(function () {});
-  // }, []);
-
-  // const handleAdd = async () => {
-  //   const categoryid = localStorage.getItem("lastname");
-  //   await axios
-  //     .post("http://localhost:8000/category", {
-  //       categoryid: categoryid,
-  //       categoryname: categories,
-  //       description: categories,
-  //       category_image: category_image,
-  //       name: name,
-  //       // date: date,
-  //       amount: amount,
-  //       // time: time,
-  //     })
-  //     .then(function (response) {
-  //       console.log(response);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     })
-  //     .finally(function () {});
-  // };
-  // console.log(name);
   const handleadd = async () => {
     await axios
       .post("http://localhost:8000/transaction", {
@@ -67,11 +33,14 @@ const AddRecord = (props) => {
         name: name,
         amount: amount,
         description: description,
+        transaction_type: incomeExpense,
         username: categoryname,
         categoryid: 1,
       })
       .then(function (response) {
         console.log(response);
+        onCloseModal();
+        getUser();
       })
       .catch(function (error) {
         console.log(error);
@@ -112,7 +81,7 @@ const AddRecord = (props) => {
             </div>
             <div
               onClick={() => handleIncomeOrExpense("Income")}
-              // onChange={(e) => setTransactionType(e.target.value)}
+              onChange={(e) => setTransactionType(e.target.value)}
               className={`py-2 px-[55.5px] ${textColorIncome} font-normal text-base rounded-3xl bg-[${Incomebackground}]`}
               style={{ backgroundColor: Incomebackground }}
             >
@@ -144,7 +113,7 @@ const AddRecord = (props) => {
               <p> Category </p>
               <select
                 className="bg-[#F9FAFB] py-3 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg"
-                onChange={(e) => setCategories(e.target.value)}
+                // onChange={(e) => setCategories(e.target.value)}
               >
                 <option defaultChecked> Find or choose category</option>
                 <option value="Food" className="px-[18px] py-2 flex gap-3">
@@ -209,3 +178,38 @@ const AddRecord = (props) => {
 };
 
 export default AddRecord;
+
+// useEffect(() => {
+//   axios
+//     .get("http://localhost:8000/category")
+//     .then(function (response) {
+//       setCategories(response.data);
+//     })
+//     .catch(function (error) {
+//       console.log(error);
+//     })
+//     .finally(function () {});
+// }, []);
+
+// const handleAdd = async () => {
+//   const categoryid = localStorage.getItem("lastname");
+//   await axios
+//     .post("http://localhost:8000/category", {
+//       categoryid: categoryid,
+//       categoryname: categories,
+//       description: categories,
+//       category_image: category_image,
+//       name: name,
+//       // date: date,
+//       amount: amount,
+//       // time: time,
+//     })
+//     .then(function (response) {
+//       console.log(response);
+//     })
+//     .catch(function (error) {
+//       console.log(error);
+//     })
+//     .finally(function () {});
+// };
+// console.log(name);

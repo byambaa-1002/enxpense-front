@@ -10,6 +10,7 @@ import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import AddRecord from "../components/AddRecord";
 import axios from "axios";
 import AddTransaction from "../components/Transaction";
+
 const categories = [
   "Food & Drinks",
   "Lending & Renting",
@@ -24,100 +25,7 @@ const categories = [
   "Income",
   "Others",
 ];
-const records = [
-  [
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-  ],
-  [
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-  ],
-];
+
 let checked = [
   "true",
   "true",
@@ -135,40 +43,34 @@ let checked = [
 const Home = () => {
   const [categories, setCategories] = useState([]);
   const [Transaction, setTransaction] = useState([]);
-  // console.log(categories);
-
-  // axios
-  //   .get("http://localhost:8000/category")
-  //   .then(function (response) {
-  //     console.log(response);
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-
-  // useEffect(() => {
-  //   async function getUser() {
-  //     try {
-  //       const response = await axios.get("http://localhost:8000/category");
-  //       console.log(response.data.categories);
-
-  //       // setCategories(response.data.categories);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
-  //   getUser();
-  // }, []);
 
   const [showAdd, setShowAdd] = useState(false);
 
   const [selected, setSelected] = useState("All");
   const [myRecords, setRecords] = useState([]);
-  ``;
+
   const [selectedCategories, setSelectedCategories] = useState(categories);
   const [selectedEyes, setSelectedEyes] = useState(checked);
 
   const [checkedCategories, setCheckedCategories] = useState(categories);
+  const [data, setData] = useState([]);
+  const [filterData, setFilterData] = useState([]);
+  console.log(data);
+
+  async function getUser() {
+    try {
+      const datas = await axios.get("http://localhost:8000/transaction");
+      setData(datas.data.transaction);
+      setFilterData(datas.data.transaction);
+      console.log(datas.data.transaction);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const handleCategory = (input, index) => {
     let myCategories = [...selectedEyes];
@@ -188,22 +90,17 @@ const Home = () => {
   };
 
   const handleExpense = () => {
-    const filtered = records.map((day) =>
-      day.filter((oneRecord) => oneRecord.money.includes("-"))
-    );
-    setRecords(filtered);
+    const filtered = data.filter((data) => data.transaction_type === "Expense");
+    setFilterData(filtered);
   };
 
   const handleIncome = () => {
-    const filtered = records.map((day) =>
-      day.filter((oneRecord) => oneRecord.money.includes("+"))
-    );
-
-    setRecords(filtered);
+    const filtered = data.filter((data) => data.transaction_type === "Income");
+    setFilterData(filtered);
   };
 
   const handleAll = () => {
-    setRecords(records);
+    setFilterData(data);
   };
 
   const handleChange = (option) => {
@@ -214,23 +111,23 @@ const Home = () => {
     setShowAdd(!showAdd);
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8000/users")
-  //     .then(function (response) {
-  //       setRecords(response.data);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     })
-  //     .finally(function () {});
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/users")
+      .then(function (response) {
+        setRecords(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(function () {});
+  }, []);
 
   return (
     <div>
       {showAdd && (
         <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
-          <AddRecord onCloseModal={handleAdd} />
+          <AddRecord onCloseModal={handleAdd} getUser={getUser} />
         </div>
       )}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
@@ -329,27 +226,24 @@ const Home = () => {
             <div className="flex flex-col gap-3">
               <p className="font-semibold text-base"> Today </p>
               <div className="flex flex-col gap-3 mb-3">
-                {myRecords.transactions?.map((recordToday, index) => {
+                {/* {myRecords?.map((recordToday, index) => {
                   return (
                     <OneRecord
                       key={index}
-                      text={recordToday.name}
+                      categoryname={recordToday?.categoryname}
+                      transactiontype={recordToday?.transactiontype}
                       image={recordToday.image}
-                      time={recordToday.time}
+                      time={recordToday.transactioncreatedat}
                       color={recordToday.color}
                       money={recordToday.amount}
-                      iconColor={
-                        recordToday.transactionType === "EXP"
-                          ? "#0166FF"
-                          : "#FF4545"
-                      }
                     />
                   );
-                })}
+                })} */}
               </div>
+
               <p className="font-semibold text-base"> Yesterday </p>
               <div className="flex flex-col gap-3">
-                <AddTransaction />
+                <AddTransaction data={filterData} />
               </div>
             </div>
           </div>
@@ -360,3 +254,28 @@ const Home = () => {
 };
 
 export default Home;
+
+// console.log(categories);
+
+// axios
+//   .get("http://localhost:8000/category")
+//   .then(function (response) {
+//     console.log(response);
+//   })
+//   .catch(function (error) {
+//     console.log(error);
+//   });
+
+// useEffect(() => {
+//   async function getUser() {
+//     try {
+//       const response = await axios.get("http://localhost:8000/category");
+//       console.log(response.data.categories);
+
+//       // setCategories(response.data.categories);
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   }
+//   getUser();
+// }, []);

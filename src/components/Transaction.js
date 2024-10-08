@@ -1,33 +1,29 @@
 import axios from "axios";
 import OneRecord from "./OneRecord";
 import { get } from "https";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import RentIcon from "../../public/icons/RentIcon";
+import FoodExpense from "../../public/icons/FoodExpenseIcon";
 
-const AddTransaction = () => {
-  const [data, setData] = useState([]);
+const AddTransaction = (props) => {
+  const { data } = props;
+  const handleAdd = () => {
+    setShowAdd(!showAdd);
+  };
 
-  async function getUser() {
-    try {
-      const datas = await axios.get("http://localhost:8000/transaction");
-      setData(datas.data.transaction);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  getUser();
+  console.log(data);
 
   return (
     <div>
-      {" "}
-      {data.map((item) => {
+      {data.map((recordToday, index) => {
         return (
           <OneRecord
             key={index}
-            // text={recordToday.text}
+            categoryname={recordToday.name}
             image={recordToday.image}
-            time={recordToday.time}
+            time={recordToday.createdat}
             color={recordToday.color}
-            money={recordToday.money}
+            money={recordToday.amount}
             iconColor={recordToday.iconColor}
           />
         );

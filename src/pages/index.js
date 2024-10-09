@@ -199,7 +199,7 @@ const Home = () => {
               </div>
               <div className="flex gap-2 py-1.5 pl-3 items-center">
                 <PlusSign color={"#0166FF"} />
-                <p>Add category </p>
+                <button onClick={() => handleAdd()}>Add category </button>
               </div>
             </div>
           </div>

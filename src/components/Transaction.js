@@ -1,9 +1,4 @@
-import axios from "axios";
 import OneRecord from "./OneRecord";
-import { get } from "https";
-import { useEffect, useState } from "react";
-import RentIcon from "../../public/icons/RentIcon";
-import FoodExpense from "../../public/icons/FoodExpenseIcon";
 
 const AddTransaction = (props) => {
   const { data } = props;

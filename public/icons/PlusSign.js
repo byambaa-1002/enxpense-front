@@ -15,4 +15,5 @@ const PlusSign = (props) => {
     </svg>
   );
 };
+
 export default PlusSign;

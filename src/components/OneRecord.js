@@ -1,4 +1,5 @@
 import moment from "moment";
+
 import { categoryIconByCategoryName } from "../util/findCategoryicon";
 
 const OneRecord = (props) => {

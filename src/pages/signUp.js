@@ -11,21 +11,23 @@ const SignUp = () => {
   const [rePassword, setRePassword] = useState("");
 
   const signUpClick = async () => {
-    const information = {
-      name: name,
-      email: email,
-      password: password,
-    };
     if (password !== rePassword) {
       console.log("Davtsan password buruu baina");
       toast.error("Davtsan password buruu baina");
     } else {
-      await axios.post("http://localhost:8000/User", {
-        email: email,
-        name: name,
-        password: password,
-        avatar_img: "https://i.pravatar.cc/300",
-      });
+      await axios
+        .post("http://localhost:8000/users/signUp", {
+          myEmail: email,
+          myName: name,
+          myPassword: password,
+          myAvatar_img: "https://i.pravatar.cc/300",
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   };
 

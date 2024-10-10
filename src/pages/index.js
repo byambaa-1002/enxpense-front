@@ -55,22 +55,46 @@ const Home = () => {
   const [checkedCategories, setCheckedCategories] = useState(categories);
   const [data, setData] = useState([]);
   const [filterData, setFilterData] = useState([]);
-  console.log(data);
+  // const [test, useTest] = useState([]);
 
+  let userid = 1;
+  if (typeof window !== "undefined") {
+    userid = localStorage.getItem("userid");
+  }
   async function getUser() {
     try {
-      const datas = await axios.get("http://localhost:8000/transaction");
-      setData(datas.data.transaction);
-      setFilterData(datas.data.transaction);
-      console.log(datas.data.transaction);
+      await axios
+        .get("http://localhost:8000/transaction")
+        .then(function (response) {
+          setData(response.data.transaction);
+        });
     } catch (error) {
       console.error(error);
     }
   }
 
+  // async function getTransaction() {
+  //   try {
+  //     await axios
+  //       .get("http://localhost:8000/transaction,{}")
+  //       .then(function (response) {
+  //         console.log(response.data.transaction);
+  //         useTest(response.data.transaction);
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //       });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
   useEffect(() => {
     getUser();
+    // getTransaction();
   }, []);
+
+  // console.log(test);
 
   const handleCategory = (input, index) => {
     let myCategories = [...selectedEyes];
@@ -127,7 +151,11 @@ const Home = () => {
     <div>
       {showAdd && (
         <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
-          <AddRecord onCloseModal={handleAdd} getUser={getUser} />
+          <AddRecord
+            onCloseModal={handleAdd}
+            getUser={getUser}
+            userid={userid}
+          />
         </div>
       )}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
@@ -243,7 +271,7 @@ const Home = () => {
 
               <p className="font-semibold text-base"> Yesterday </p>
               <div className="flex flex-col gap-3">
-                <AddTransaction data={filterData} />
+                <AddTransaction data={data} />
               </div>
             </div>
           </div>

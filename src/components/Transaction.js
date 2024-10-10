@@ -2,12 +2,7 @@ import OneRecord from "./OneRecord";
 
 const AddTransaction = (props) => {
   const { data } = props;
-  const handleAdd = () => {
-    setShowAdd(!showAdd);
-  };
-
   console.log(data);
-
   return (
     <div>
       {data.map((recordToday, index) => {
@@ -27,3 +22,13 @@ const AddTransaction = (props) => {
   );
 };
 export default AddTransaction;
+
+// categoryname, image, color, money, transactiontype
+
+// userid: userid,
+// name: name,
+// amount: amount,
+// description: description,
+// transaction_type: incomeExpense,
+// username: categoryname,
+// categoryid: 1,

@@ -6,7 +6,7 @@ const icons = [
   {
     color: "#23E01F",
     image: <RentIcon />,
-    name: "2",
+    name: "Alimaa",
     iconColor: "#0166FF",
   },
   {
@@ -19,6 +19,12 @@ const icons = [
     color: "#F54949",
     image: <Shopping />,
     name: "dsSdf",
+    iconColor: "#FF4545",
+  },
+  {
+    color: "#F54949",
+    image: <Shopping />,
+    name: "bataa",
     iconColor: "#FF4545",
   },
 ];

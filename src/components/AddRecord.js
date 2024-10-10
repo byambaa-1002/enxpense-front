@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const AddRecord = (props) => {
-  const { onCloseModal } = props;
+  const { onCloseModal, getUser, userid } = props;
   const [incomeExpense, setIncomeExpense] = useState("Expense");
   const [categories, setCategories] = useState([]);
   const [categoryname, setcategoryname] = useState(0);
@@ -11,7 +11,6 @@ const AddRecord = (props) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [amount, setAmount] = useState("");
-  const { getUser } = props;
   const [description, setDescription] = useState("");
   const [transactionType, setTransactionType] = useState("EXP");
   const [name, setName] = useState("");
@@ -29,7 +28,7 @@ const AddRecord = (props) => {
   const handleadd = async () => {
     await axios
       .post("http://localhost:8000/transaction", {
-        userid: 1,
+        userid: userid,
         name: name,
         amount: amount,
         description: description,
@@ -113,7 +112,7 @@ const AddRecord = (props) => {
               <p> Category </p>
               <select
                 className="bg-[#F9FAFB] py-3 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg"
-                // onChange={(e) => setCategories(e.target.value)}
+                onChange={(e) => setCategories(e.target.value)}
               >
                 <option defaultChecked> Find or choose category</option>
                 <option value="Food" className="px-[18px] py-2 flex gap-3">
@@ -192,7 +191,7 @@ export default AddRecord;
 // }, []);
 
 // const handleAdd = async () => {
-//   const categoryid = localStorage.getItem("lastname");
+//   const categoryid = localStorage.getItem("userid");
 //   await axios
 //     .post("http://localhost:8000/category", {
 //       categoryid: categoryid,

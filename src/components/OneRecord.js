@@ -3,7 +3,7 @@ import moment from "moment";
 import { categoryIconByCategoryName } from "../util/findCategoryicon";
 
 const OneRecord = (props) => {
-  const { categoryname, time, color, money, transactiontype } = props;
+  const { categoryname, image, color, money, transactiontype } = props;
 
   const iconColor = transactiontype === "EXP" ? "#0166FF" : "#FF4545";
 
@@ -13,7 +13,9 @@ const OneRecord = (props) => {
     <div className="w-full px-6 py-3 border bg-white border-[#E5E7EB] items-center justify-between flex rounded-xl">
       <div className="flex gap-4">
         <div
-          className={`flex justify-center items-center w-10 h-10 rounded-full bg-[${icon}]`}
+          className={`flex justify-center items-center w-10 h-10 rounded-full bg-[${
+            (icon, image)
+          }]`}
           style={{
             backgroundColor: iconColor,
           }}

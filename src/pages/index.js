@@ -10,7 +10,7 @@ import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import AddRecord from "../components/AddRecord";
 import axios from "axios";
 import AddTransaction from "../components/Transaction";
-
+import addCategory from "./addCategory";
 const categories = [
   "Food & Drinks",
   "Lending & Renting",
@@ -57,6 +57,8 @@ const Home = () => {
   const [filterData, setFilterData] = useState([]);
   // const [test, useTest] = useState([]);
 
+  const [addCategory, setaddCategory] = useState([]);
+
   let userid = 1;
   if (typeof window !== "undefined") {
     userid = localStorage.getItem("userid");
@@ -72,6 +74,19 @@ const Home = () => {
       console.error(error);
     }
   }
+
+  async function addCategory() {
+    try {
+      await axios
+        .get("http://localhost:8000/addCategory")
+        .then(function (response) {
+          setData(response.data.addCategory);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  console.log(addCategory);
 
   // async function getTransaction() {
   //   try {
@@ -155,6 +170,7 @@ const Home = () => {
             onCloseModal={handleAdd}
             getUser={getUser}
             userid={userid}
+            addCategory={addCategory}
           />
         </div>
       )}
@@ -227,7 +243,8 @@ const Home = () => {
               </div>
               <div className="flex gap-2 py-1.5 pl-3 items-center">
                 <PlusSign color={"#0166FF"} />
-                <button onClick={() => handleAdd()}>Add category </button>
+                {/* <addCategory /> */}
+                <button onClick={() => addCategory()}>Add category </button>
               </div>
             </div>
           </div>

@@ -1,34 +1,35 @@
 import Drink from "../../public/icons/Drink";
+import { IoClose } from "react-icons/io5";
 
-const addCategory = () => {
+const addCategory = (props) => {
+  const { onCloseModal, data } = props;
+
   return (
-    <div className="w-[792px] flex flex-col rounded-xl  border-b border-[#E2E8F0] bg-slate-200">
-      <p>Add Category</p>
-      <></>
-      <div>
-        <div>
-          <select
-            className="bg-[#F9FAFB] py-3 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg"
-            onChange={(e) => setCategories(e.target.value)}
-          >
-            <option defaultChecked> Find or choose category</option>
-            <option value="Food" className="px-[18px] py-2 flex gap-3">
-              Food
-            </option>
-            <option value="Home">
-              {" "}
-              <Drink />
-            </option>
-            <option value="delguur">delguur</option>
-            {/* {addCategory?.addCategory?.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))} */}
-          </select>
-          <input />
+    <div>
+      <div className=" w-[494px] h-[234px] border rounded-xl flex flex-col items-center justify-center gap-10">
+        <div className="w-[494px]  gap-10 py-3 px-4 flex justify-between ">
+          <p className="text-2xl ">Add Category</p>
+          <IoClose size={24} onClick={onCloseModal} />
         </div>
-        <button></button>
+        <div className=" flex  justify-between">
+          <select className="select w-[84px] h-[48px]">
+            <option disabled selected>
+              Pick your favorite Simpson
+            </option>
+            <option>Homer</option>
+            <option>Marge</option>
+            <option>Bart</option>
+            <option>Lisa</option>
+            <option>Maggie</option>
+          </select>
+          <input
+            placeholder="Name"
+            className="w-[310px] h-[48px] border rounded-xl "
+          />
+        </div>
+        <button className=" border w-[464px] h-[48px] rounded-xl bg-[#16A34A]">
+          Add
+        </button>
       </div>
     </div>
   );

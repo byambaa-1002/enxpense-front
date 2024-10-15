@@ -184,7 +184,7 @@ const Records = () => {
     setShowAdd(!showAdd);
   };
   const addRecord = () => {
-    axios.get("http://localhost:8080/transaction", {});
+    axios.get("http://backendexpense-fr82.onrender.com/transaction", {});
   };
   // const opacity = showAdd === false ? "opacity-100" : "opacity-100";
   return (

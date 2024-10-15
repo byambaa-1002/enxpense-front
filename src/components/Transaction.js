@@ -2,7 +2,7 @@ import OneRecord from "./OneRecord";
 
 const AddTransaction = (props) => {
   const { data } = props;
-  console.log(data);
+
   return (
     <div>
       {data.map((recordToday, index) => {

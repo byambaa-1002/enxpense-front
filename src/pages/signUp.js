@@ -16,7 +16,7 @@ const SignUp = () => {
       toast.error("Davtsan password buruu baina");
     } else {
       await axios
-        .post("http://localhost:8000/users/signUp", {
+        .post("http://backendexpense-fr82.onrender.com/users/signUp", {
           myEmail: email,
           myName: name,
           myPassword: password,

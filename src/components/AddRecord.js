@@ -27,7 +27,7 @@ const AddRecord = (props) => {
 
   const handleadd = async () => {
     await axios
-      .post("http://localhost:8000/transaction", {
+      .post("http://backendexpense-fr82.onrender.com/transaction", {
         userid: userid,
         name: name,
         amount: amount,

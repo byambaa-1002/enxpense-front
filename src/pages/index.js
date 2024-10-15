@@ -10,7 +10,9 @@ import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import AddRecord from "../components/AddRecord";
 import axios from "axios";
 import AddTransaction from "../components/Transaction";
-import addCategory from "./addCategory";
+import addCategory from "../components/addCategory";
+import AddCategory from "../components/addCategory";
+
 const categories = [
   "Food & Drinks",
   "Lending & Renting",
@@ -55,9 +57,10 @@ const Home = () => {
   const [checkedCategories, setCheckedCategories] = useState(categories);
   const [data, setData] = useState([]);
   const [filterData, setFilterData] = useState([]);
+  const [showCategory, setShowCategory] = useState(false);
   // const [test, useTest] = useState([]);
 
-  const [addCategory, setaddCategory] = useState([]);
+  // const [addCategory, setaddCategory] = useState([]);
 
   let userid = 1;
   if (typeof window !== "undefined") {
@@ -66,7 +69,7 @@ const Home = () => {
   async function getUser() {
     try {
       await axios
-        .get("http://localhost:8000/transaction")
+        .get("http://backendexpense-fr82.onrender.com/transaction")
         .then(function (response) {
           setData(response.data.transaction);
         });
@@ -75,34 +78,34 @@ const Home = () => {
     }
   }
 
-  async function addCategory() {
-    try {
-      await axios
-        .get("http://localhost:8000/addCategory")
-        .then(function (response) {
-          setData(response.data.addCategory);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  console.log(addCategory);
-
-  // async function getTransaction() {
+  // async function addCategory() {
   //   try {
   //     await axios
-  //       .get("http://localhost:8000/transaction,{}")
+  //       .get("http://localhost:8000/addCategory")
   //       .then(function (response) {
-  //         console.log(response.data.transaction);
-  //         useTest(response.data.transaction);
-  //       })
-  //       .catch(function (error) {
-  //         console.log(error);
+  //         setData(response.data.addCategory);
   //       });
   //   } catch (error) {
-  //     console.log(error);
+  //     console.error(error);
   //   }
   // }
+  // // console.log(addCategory);
+
+  async function getTransaction() {
+    try {
+      await axios
+        .get("http://backendexpense-fr82.onrender.com/transaction")
+        .then(function (response) {
+          console.log(response.data.transaction);
+          useTest(response.data.transaction);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
     getUser();
@@ -149,10 +152,12 @@ const Home = () => {
   const handleAdd = () => {
     setShowAdd(!showAdd);
   };
-
+  const handlecategory = () => {
+    setShowCategory(!showCategory);
+  };
   useEffect(() => {
     axios
-      .get("http://localhost:8000/users")
+      .get("http://backendexpense-fr82.onrender.com/users")
       .then(function (response) {
         setRecords(response.data);
       })
@@ -170,8 +175,13 @@ const Home = () => {
             onCloseModal={handleAdd}
             getUser={getUser}
             userid={userid}
-            addCategory={addCategory}
+            // addCategory={addCategory}
           />
+        </div>
+      )}
+      {showCategory && (
+        <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
+          <AddCategory onCloseModal={handlecategory} />
         </div>
       )}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
@@ -244,7 +254,7 @@ const Home = () => {
               <div className="flex gap-2 py-1.5 pl-3 items-center">
                 <PlusSign color={"#0166FF"} />
                 {/* <addCategory /> */}
-                <button onClick={() => addCategory()}>Add category </button>
+                <button onClick={handlecategory}>Add category </button>
               </div>
             </div>
           </div>

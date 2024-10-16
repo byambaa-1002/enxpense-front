@@ -20,6 +20,7 @@ const MyCategories = (props) => {
     >
       {icon}
       <p className="font-normal text-base text-[#1F2937]">{categoryName}</p>
+      <p>{ischecked}</p>
     </div>
   );
 };

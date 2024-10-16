@@ -27,7 +27,7 @@ const AddRecord = (props) => {
 
   const handleadd = async () => {
     await axios
-      .post("http://backendexpense-fr82.onrender.com/transaction", {
+      .post("http://localhost:8000/transaction", {
         userid: userid,
         name: name,
         amount: amount,
@@ -35,6 +35,7 @@ const AddRecord = (props) => {
         transaction_type: incomeExpense,
         username: categoryname,
         categoryid: 1,
+        category_image: category_image,
       })
       .then(function (response) {
         console.log(response);
@@ -42,7 +43,7 @@ const AddRecord = (props) => {
         getUser();
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(userid);
       });
   };
   const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#F3F4F6";
@@ -109,17 +110,29 @@ const AddRecord = (props) => {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <p> Category </p>
+              {/* <p> Category </p> */}
               <select
                 className="bg-[#F9FAFB] py-3 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg"
                 onChange={(e) => setCategories(e.target.value)}
               >
                 <option defaultChecked> Find or choose category</option>
                 <option value="Food" className="px-[18px] py-2 flex gap-3">
-                  Food
+                  Food & Drinks
                 </option>
-                <option value="Home"> Home </option>
-                <option value="delguur">delguur</option>
+                <option value="Lending & Renting"> Lending & Renting </option>
+                <option value="Shopping"> Shopping </option>
+                <option value="Housing"> Housing </option>
+                <option value="Transportation">Transportation </option>
+                <option value="Vehicle"> Vehicle </option>
+                <option value="Life & Entertainment">
+                  {" "}
+                  Life & Entertainment{" "}
+                </option>
+                <option value="Communication, PC"> Communication, PC </option>
+                <option value="Financial expenses"> Financial expenses</option>
+                <option value="Investments">Investments</option>
+                <option value="Income">Income</option>
+                <option value="Others">Others</option>
                 {categories?.categories?.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}

@@ -1,13 +1,14 @@
 import { IoClose } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "sonner";
 
 const AddCategory = (props) => {
   const { onCloseModal } = props;
   const [incomeExpense, setIncomeExpense] = useState("Expense");
   const [categories, setCategories] = useState([]);
   const [categoryname, setcategoryname] = useState(0);
-
+  const [userid, setuserid] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [transactionType, setTransactionType] = useState("EXP");
@@ -35,13 +36,22 @@ const AddCategory = (props) => {
         categoryid: 1,
       })
       .then(function (response) {
+        if (response.data.users.length === 1) {
+          localStorage.setItem("userid", response.data.users[0].userid);
+
+          Router.push("/");
+        } else {
+          toast.error("unsuccessful");
+        }
         console.log(response);
         onCloseModal();
         getUser();
       })
       .catch(function (error) {
         console.log(error);
-      });
+        toast.error("unsuccessful");
+      })
+      .finally(function () {});
   };
 
   const textColorIncome =
@@ -67,10 +77,22 @@ const AddCategory = (props) => {
               >
                 <option defaultChecked> Find or choose category</option>
                 <option value="Food" className="px-[18px] py-2 flex gap-3">
-                  Food
+                  Food & Drinks
                 </option>
-                <option value="Home"> Home </option>
-                <option value="delguur">delguur</option>
+                <option value="Lending & Renting"> Lending & Renting </option>
+                <option value="Shopping"> Shopping </option>
+                <option value="Housing"> Housing </option>
+                <option value="Transportation">Transportation </option>
+                <option value="Vehicle"> Vehicle </option>
+                <option value="Life & Entertainment">
+                  {" "}
+                  Life & Entertainment{" "}
+                </option>
+                <option value="Communication, PC"> Communication, PC </option>
+                <option value="Financial expenses"> Financial expenses</option>
+                <option value="Investments">Investments</option>
+                <option value="Income">Income</option>
+                <option value="Others">Others</option>
                 {categories?.categories?.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}

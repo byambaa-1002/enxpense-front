@@ -2,8 +2,8 @@ import moment from "moment";
 
 import { categoryIconByCategoryName } from "../util/findCategoryicon";
 
-const OneRecord = (props) => {
-  const { categoryname, image, color, money, transactiontype } = props;
+const Record = (props) => {
+  const { categoryname, image, color, money, transactiontype, date } = props;
 
   const iconColor = transactiontype === "EXP" ? "#0166FF" : "#FF4545";
 
@@ -25,7 +25,7 @@ const OneRecord = (props) => {
         <div className="flex flex-col">
           <p className="font-normal text-base">{categoryname}</p>
           <p className="font-normal text-xs text-[#6B7280]"></p>
-          {moment().format("LTS")}
+          {moment(date).format("LTS")}
         </div>
       </div>
       <p
@@ -38,4 +38,4 @@ const OneRecord = (props) => {
   );
 };
 
-export default OneRecord;
+export default Record;

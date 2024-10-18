@@ -1,35 +1,42 @@
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import RentIcon from "../../public/icons/RentIcon";
 import Shopping from "../../public/icons/Shopping";
-
+import Taxi from "../../public/icons/Taxi";
+import Drink from "../../public/icons/Drink";
 const icons = [
   {
+    categoryid: 1,
     color: "#23E01F",
     image: <RentIcon />,
-    name: "Alimaa",
-    iconColor: "#0166FF",
   },
   {
+    categoryid: 2,
     color: "#F54949",
     image: <FoodExpense />,
-    name: "xdfsz",
-    iconColor: "#FF4545",
-  },
-  {
-    color: "#F54949",
-    image: <Shopping />,
-    name: "dsSdf",
-    iconColor: "#FF4545",
-  },
-  {
-    color: "#F54949",
-    image: <Shopping />,
     name: "bataa",
-    iconColor: "#FF4545",
+  },
+
+  {
+    categoryid: 3,
+    color: "#F54949",
+    image: <Shopping />,
+  },
+
+  {
+    categoryid: 4,
+    color: "#F54949",
+    image: <Taxi />,
+  },
+
+  {
+    categoryid: 5,
+    color: "#F54949",
+    image: <Drink />,
   },
 ];
 
-export const categoryIconByCategoryName = (props) => {
-  const icon = icons.find((icon) => icon.name === props.categoryname);
+export const categoryIconByCategoryId = (id) => {
+  const icon = icons.find((icon) => icon.categoryid === id);
+
   return icon;
 };

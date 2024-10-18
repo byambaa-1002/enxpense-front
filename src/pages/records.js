@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
 import { useState, useEffect } from "react";
-import MyCategories from "@/components/Category";
+import MyCategories from "../components/Category";
 import PlusSign from "../../public/icons/PlusSign";
 import OneRecord from "../components/OneRecord";
 import { FaChevronLeft, FaSearchengin } from "react-icons/fa6";
@@ -8,7 +8,7 @@ import { FaAngleRight } from "react-icons/fa6";
 import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 
-import AddRecord from "@/components/AddRecord";
+import AddRecord from "../components/AddRecord";
 import axios from "axios";
 
 const categories = [
@@ -28,6 +28,7 @@ const categories = [
 const records = [
   [
     {
+      id: 1,
       color: "#23E01F",
       image: <RentIcon />,
       time: "14:00",
@@ -36,6 +37,7 @@ const records = [
       iconColor: "#0166FF",
     },
     {
+      id: 2,
       color: "#F54949",
       image: <FoodExpense />,
       time: "14:00",
@@ -310,6 +312,7 @@ const Records = () => {
                   return (
                     <OneRecord
                       key={index}
+                      id={recordToday.id}
                       text={recordToday.text}
                       image={recordToday.image}
                       time={recordToday.time}

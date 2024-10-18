@@ -1,17 +1,17 @@
 import Navbar from "../components/Navbar";
-
-import MyCategories from "../components/Category";
 import PlusSign from "../../public/icons/PlusSign";
 import Record from "../components/OneRecord";
 import { FaChevronLeft, FaSearchengin } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
-
-import AddRecord from "../components/AddRecord";
-
 import AddCategory from "../components/addCategory";
 import { useRecords } from "../provider/RecodsProvider";
+import { useRouter } from "next/router";
+import Categories from "../components/Category";
 
 const Home = () => {
+  const router = useRouter();
+  // const userid = localStorage.getItem("userid");
+
   const {
     categories,
     records,
@@ -21,20 +21,15 @@ const Home = () => {
     filterReset,
   } = useRecords();
 
+  const handleAdd = () => {
+    router.push("/add-record");
+  };
+
   return (
     <div>
       {false && (
         <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
-          <AddRecord
-            onCloseModal={handleAdd}
-            getUser={getUser}
-            userid={userid}
-          />
-        </div>
-      )}
-      {false && (
-        <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
-          <AddCategory onCloseModal={() => {}} />
+          <AddCategory onCloseModal={() => AddCategory()} />
         </div>
       )}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
@@ -45,7 +40,7 @@ const Home = () => {
             <div className="flex flex-col gap-6">
               <p> Records </p>
               <button
-                onClick={() => {}}
+                onClick={() => handleAdd()}
                 className="flex gap-1 w-[225px] bg-[#0166FF] rounded-3xl text-white items-center justify-center"
               >
                 <PlusSign color="white" /> Add
@@ -94,20 +89,24 @@ const Home = () => {
               </div>
 
               <div className="flex flex-col gap-2">
-                <MyCategories />
+                {/* <MyCategories /> */}
 
-                {/* {categories.map((category1, index) => {
+                {categories?.map((category) => {
                   return (
-                    <div key={index}>
-                      <MyCategories categoryName={category1} />
+                    <div key={category.categoryid}>
+                      <Categories
+                        id={category.categoryid}
+                        categoryName={category?.categoryname}
+                        isSelected={category.isSelected}
+                      />
                     </div>
                   );
-                })} */}
+                })}
               </div>
               <div className="flex gap-2 py-1.5 pl-3 items-center">
                 <PlusSign color={"#0166FF"} />
 
-                <button onClick={() => {}}>Add category </button>
+                <button onClick={() => AddCategory()}>Add category </button>
               </div>
             </div>
           </div>
@@ -133,12 +132,17 @@ const Home = () => {
             </div>
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-3 mb-3">
-                {records.map((record) => {
+                {records.map((record, index) => {
                   return (
                     <Record
-                      money={record?.amount}
-                      transactiontype={record?.transaction_type}
-                      date={record.date}
+                      key={index}
+                      type={record.transaction_type}
+                      name={record.name}
+                      time={record.time}
+                      color={record.color}
+                      money={record.amount}
+                      iconColor={record.iconColor}
+                      categoryid={record.categoryid}
                     />
                   );
                 })}

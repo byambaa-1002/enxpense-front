@@ -26,7 +26,7 @@ const AddCategory = (props) => {
 
   const handleadd = async () => {
     await axios
-      .post("http://backendexpense-fr82.onrender.com/transaction", {
+      .post("http://localhost:8000/transaction", {
         userid: userid,
         name: name,
         amount: amount,

@@ -1,7 +1,12 @@
+import axios from "axios";
 import OneRecord from "./OneRecord";
 
 const AddTransaction = (props) => {
   const { data } = props;
+
+  const records = () => {
+    axios``;
+  };
 
   return (
     <div>
